@@ -92,6 +92,7 @@ Each use case is encapsulated in its own package.
 Use case classes handle business logic.
 For simple operations with a single parameter (e.g., delete by ID), pass the parameter directly to the use case and controller methods.
 For operations with multiple or complex parameters, use request objects.
+Each Use Case gets its own Controller, UseCase, and Repository classes prefixed with the name of the use case. For example, the "Add Contact" use case would be in the addcontact package with "AddContactController", "AddContactUseCase", and "AddContactRepository" classes in addition to other classes necessary to describe the use case data.
 
 ### 3.3 Dependency Injection
 
