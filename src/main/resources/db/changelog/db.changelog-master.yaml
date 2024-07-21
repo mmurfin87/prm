@@ -82,3 +82,154 @@ databaseChangeLog:
       changes:
         - sql:
             sql: ALTER TABLE interactions ADD CONSTRAINT check_end_after_start CHECK (ended >= started);
+  - changeSet:
+      id: 4
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_male_name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_female_name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_male_name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_female_name
+                  type: text
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 5
+      author: mmurfin
+      changes:
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Spousal"
+              - column:
+                  name: origin_male_name
+                  value: "Husband"
+              - column:
+                  name: origin_female_name
+                  value: "Wife"
+              - column:
+                  name: target_male_name
+                  value: "Husband"
+              - column:
+                  name: target_female_name
+                  value: "Wife"
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Parent-Child"
+              - column:
+                  name: origin_male_name
+                  value: "Father"
+              - column:
+                  name: origin_female_name
+                  value: "Mother"
+              - column:
+                  name: target_male_name
+                  value: "Son"
+              - column:
+                  name: target_female_name
+                  value: "Daughter"
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Sibling"
+              - column:
+                  name: origin_male_name
+                  value: "Brother"
+              - column:
+                  name: origin_female_name
+                  value: "Sister"
+              - column:
+                  name: target_male_name
+                  value: "Brother"
+              - column:
+                  name: target_female_name
+                  value: "Sister"
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Friend"
+              - column:
+                  name: origin_male_name
+                  value: "Friend"
+              - column:
+                  name: origin_female_name
+                  value: "Friend"
+              - column:
+                  name: target_male_name
+                  value: "Friend"
+              - column:
+                  name: target_female_name
+                  value: "Friend"
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Colleague"
+              - column:
+                  name: origin_male_name
+                  value: "Colleague"
+              - column:
+                  name: origin_female_name
+                  value: "Colleague"
+              - column:
+                  name: target_male_name
+                  value: "Colleague"
+              - column:
+                  name: target_female_name
+                  value: "Colleague"
+        - insert:
+            tableName: relationship_types
+            columns:
+              - column:
+                  name: name
+                  value: "Manager-Subordinate"
+              - column:
+                  name: origin_male_name
+                  value: "Manager"
+              - column:
+                  name: origin_female_name
+                  value: "Manager"
+              - column:
+                  name: target_male_name
+                  value: "Subordinate"
+              - column:
+                  name: target_female_name
+                  value: "Subordinate"

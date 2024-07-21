@@ -13,6 +13,9 @@ import com.yourcompany.personalcrm.contacts.listcontacts.ListContactsRepository;
 import com.yourcompany.personalcrm.contacts.updatecontact.UpdateContactRepository;
 import com.yourcompany.personalcrm.interactions.addinteraction.AddInteractionRepository;
 import com.yourcompany.personalcrm.interactions.deleteinteraction.DeleteInteractionRepository;
+import com.yourcompany.personalcrm.relationshiptypes.addrelationshiptype.AddRelationshipTypeRepository;
+import com.yourcompany.personalcrm.relationshiptypes.deleterelationshiptype.DeleteRelationshipTypeRepository;
+import com.yourcompany.personalcrm.relationshiptypes.listrelationshiptypes.ListRelationshipTypesRepository;
 
 import lombok.NonNull;
 
@@ -80,5 +83,23 @@ public class JdbiConfiguration
     public DeleteInteractionRepository deleteInteractionRepository(@NonNull final Jdbi jdbi)
     {
         return jdbi.onDemand(DeleteInteractionRepository.class);
+    }
+
+    @Bean
+    public ListRelationshipTypesRepository listRelationshipTypesRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(ListRelationshipTypesRepository.class);
+    }
+
+    @Bean
+    public AddRelationshipTypeRepository addRelationshipTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(AddRelationshipTypeRepository.class);
+    }
+
+    @Bean
+    public DeleteRelationshipTypeRepository deleteRelationshipTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(DeleteRelationshipTypeRepository.class);
     }
 }

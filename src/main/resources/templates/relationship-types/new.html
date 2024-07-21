@@ -1,0 +1,38 @@
+{{< /layout}}
+
+{{$title}}Add New Relationship Type{{/title}}
+
+{{$content}}
+<h1>Add New Relationship Type</h1>
+
+<form action="/relationship-types" method="POST">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+
+    <h3>Origin Role</h3>
+    <div class="form-group">
+        <label for="originMaleName">Male Name:</label>
+        <input type="text" id="originMaleName" name="originMaleName" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="originFemaleName">Female Name:</label>
+        <input type="text" id="originFemaleName" name="originFemaleName" class="form-control" required>
+    </div>
+
+    <h3>Target Role</h3>
+    <div class="form-group">
+        <label for="targetMaleName">Male Name:</label>
+        <input type="text" id="targetMaleName" name="targetMaleName" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="targetFemaleName">Female Name:</label>
+        <input type="text" id="targetFemaleName" name="targetFemaleName" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Relationship Type</button>
+</form>
+{{/content}}
+
+{{/ /layout}}
