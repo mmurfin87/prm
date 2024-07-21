@@ -8,29 +8,10 @@
 <p>Phone: {{contactDetails.phone}}</p>
 <p>Company: {{contactDetails.company}}</p>
 
-<h3>Interactions</h3>
+{{> /interactions/list}}
 
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#interactions}}
-        <tr>
-            <td>{{formatedStarted}}</td>
-            <td>{{type}}</td>
-            <td>{{summary}}</td>
-        </tr>
-        {{/interactions}}
-    </tbody>
-</table>
-
-<a href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a>
-<a href="/interactions/new?contactId={{contactDetails.id}}">Add Interaction</a>
+<a href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a> | 
+<a href="/interactions/new?for-contact-id={{contactDetails.id}}">Add Interaction</a>
 
 {{/ content}}
 {{/ /layout}}

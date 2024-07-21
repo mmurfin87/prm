@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PostRedirectGet {
     String value() default "";
+    boolean toReferrer() default false;
 }

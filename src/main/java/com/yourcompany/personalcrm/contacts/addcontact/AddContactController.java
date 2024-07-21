@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yourcompany.personalcrm.config.PostRedirectGet;
+import com.yourcompany.personalcrm.config.View;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,7 @@ public class AddContactController
 
     @Hidden
     @PostRedirectGet
+    @View("contacts/created")
     @Operation(summary = "Add a new contact", description = "Adds a new contact to the system")
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public AddContactResponse addContactForm(@NonNull @ModelAttribute final AddContactRequest request)

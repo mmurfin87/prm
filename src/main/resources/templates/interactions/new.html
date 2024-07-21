@@ -10,35 +10,35 @@
     <div>
         <label for="contactId">Contact:</label>
         <select id="contactId" name="contactId" required>
-            {{# .}}
-                <option value="{{key}}">{{value}}</option>
-            {{/ .}}
+            {{# contactOptions}}
+                <option {{# selected}}selected{{/ selected}} value="{{id}}">{{name}}</option>
+            {{/ contactOptions}}
         </select>
     </div>
 
     <div>
         <label for="type">Type:</label>
-        <input type="text" id="type" name="type" required>
+        <input type="text" id="type" name="type" value="{{type}}" required>
     </div>
 
     <div>
         <label for="start">Start Time:</label>
-        <input type="datetime-local" id="started" name="started" required>
+        <input type="datetime-local" id="started" name="started" value="{{started}}" required>
     </div>
 
     <div>
         <label for="end">End Time:</label>
-        <input type="datetime-local" id="ended" name="ended" required>
+        <input type="datetime-local" id="ended" name="ended" value="{{ended}}">
     </div>
 
     <div>
         <label for="summary">Summary:</label>
-        <textarea id="summary" name="summary" rows="4" cols="50"></textarea>
+        <textarea id="summary" name="summary" rows="4" cols="50">{{summary}}</textarea>
     </div>
 
     <div>
         <label for="location">Location:</label>
-        <input type="text" id="location" name="location">
+        <input type="text" id="location" name="location" value="{{location}}">
     </div>
 
     <div>

@@ -1,5 +1,7 @@
 package com.yourcompany.personalcrm.interactions.addinteraction;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -16,11 +18,17 @@ public class AddInteractionUseCase
     @NonNull
     private final AddInteractionRepository repository;
 
-    public Map<String, String> identifyAvailableContacts()
+    public AddInteractionForm prepareAddInteractionForm(String forContactId)
     {
         final Map<String, String> result = repository.getContactIdNameMap();
-        log.info("Results: {}", result);
-        return result;
+        return new AddInteractionForm(result.entrySet().stream()
+                .map(e -> new AddInteractionContactOption(e.getKey(), e.getValue(), e.getKey().equalsIgnoreCase(forContactId)))
+                .toList(),
+            null,
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+            null,
+            null, 
+            null);
     }
 
     public AddInteractionResponse execute(@NonNull final AddInteractionRequest request)

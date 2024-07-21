@@ -50,6 +50,7 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_interaction_contact
                     references: contacts(id)
+                    deleteCascade: true
               - column:
                   name: type
                   type: text

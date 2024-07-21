@@ -12,6 +12,7 @@ import com.yourcompany.personalcrm.contacts.inspectcontactdetails.InspectContact
 import com.yourcompany.personalcrm.contacts.listcontacts.ListContactsRepository;
 import com.yourcompany.personalcrm.contacts.updatecontact.UpdateContactRepository;
 import com.yourcompany.personalcrm.interactions.addinteraction.AddInteractionRepository;
+import com.yourcompany.personalcrm.interactions.deleteinteraction.DeleteInteractionRepository;
 
 import lombok.NonNull;
 
@@ -73,5 +74,11 @@ public class JdbiConfiguration
     public AddInteractionRepository addInteractionRepository(@NonNull final Jdbi jdbi)
     {
         return jdbi.onDemand(AddInteractionRepository.class);
+    }
+
+    @Bean
+    public DeleteInteractionRepository deleteInteractionRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(DeleteInteractionRepository.class);
     }
 }

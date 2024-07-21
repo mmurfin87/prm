@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
+import java.net.URI;
 
 @Slf4j
 @ControllerAdvice
@@ -34,9 +35,18 @@ public class PostRedirectGetInterceptor implements HandlerInterceptor
         
         final PostRedirectGet annotation = method.getAnnotation(PostRedirectGet.class);
         String redirectUrl = annotation.value();
-        
-        if (redirectUrl.isEmpty()) 
-            redirectUrl = request.getRequestURL().toString();
+        log.info("1. redirectUrl: {}", redirectUrl);
+        if (redirectUrl == null || redirectUrl.isBlank())
+        {
+            log.info("2. requestUrl: {}", request.getRequestURL().toString());
+            final String referrer = request.getHeader("Referer");
+            log.info("3. referrer: {}", redirectUrl);
+            if (annotation.toReferrer() && referrer != null && !referrer.isBlank())
+                redirectUrl = URI.create(referrer).getPath();
+            else
+                redirectUrl = request.getRequestURL().toString();
+                log.info("4. redirectUrl: {}", redirectUrl);
+        }
         
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);
         response.setHeader("Location", redirectUrl);

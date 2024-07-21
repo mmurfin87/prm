@@ -1,20 +1,16 @@
 package com.yourcompany.personalcrm.interactions.addinteraction;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yourcompany.personalcrm.config.PostRedirectGet;
-import com.yourcompany.personalcrm.contacts.listcontacts.ContactSummary;
+import com.yourcompany.personalcrm.config.View;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,12 +31,11 @@ public class AddInteractionController
 
     @GetMapping("new")
     @Operation(summary = "Prepare to add a new interaction", description = "Fetch data necessary to add a new interaction, such as the list of contacts available to interact with")
-    public Set<Map.Entry<String, String>> showAddInteractionForm(Model model)
+    public AddInteractionForm showAddInteractionForm(@RequestParam(value="for-contact-id", required = false) String forContactId)
     {
-        return addInteractionUseCase.identifyAvailableContacts().entrySet();
+        return addInteractionUseCase.prepareAddInteractionForm(forContactId);
     }
 
-    @PostRedirectGet
     @Operation(summary = "Add a new interaction", description = "Adds a new interaction to the system", 
         requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = {
@@ -55,6 +50,7 @@ public class AddInteractionController
     }
 
     @Hidden
+    @View("/interactions/created")
     @PostRedirectGet("contacts")
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public AddInteractionResponse addInteractionForm(@NonNull @ModelAttribute final AddInteractionRequest request)
