@@ -1,0 +1,25 @@
+<h2>Contact List</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{# .}}
+        <tr>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{phone}}</td>
+            <td>
+                <a href="/contacts/{{id}}">View</a>
+                <a href="/contacts/{{id}}/edit">Edit</a>
+                <button onclick="deleteContact('{{id}}')">Delete</button>
+            </td>
+        </tr>
+        {{/ .}}
+    </tbody>
+</table>

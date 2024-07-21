@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{$ title}}{{/ title}} - Personal CRM</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Personal CRM</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/contacts">Contacts</a></li>
+                <li><a href="/contacts/new">Add Contact</a></li>
+                <li><a href="/interactions/new">Add Interaction</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {{$content}}{{/ content}}
+    </main>
+    <footer>
+        <p>&copy; 2024 Personal CRM</p>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>

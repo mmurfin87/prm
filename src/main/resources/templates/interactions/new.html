@@ -1,0 +1,70 @@
+{{< /layout}}
+
+{{$ title}}Add New Interaction{{/ title}}
+
+{{$ content}}
+<h2>Add New Interaction</h2>
+
+<form action="/interactions" method="POST">
+    
+    <div>
+        <label for="contactId">Contact:</label>
+        <select id="contactId" name="contactId" required>
+            {{# .}}
+                <option value="{{key}}">{{value}}</option>
+            {{/ .}}
+        </select>
+    </div>
+
+    <div>
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" required>
+    </div>
+
+    <div>
+        <label for="start">Start Time:</label>
+        <input type="datetime-local" id="started" name="started" required>
+    </div>
+
+    <div>
+        <label for="end">End Time:</label>
+        <input type="datetime-local" id="ended" name="ended" required>
+    </div>
+
+    <div>
+        <label for="summary">Summary:</label>
+        <textarea id="summary" name="summary" rows="4" cols="50"></textarea>
+    </div>
+
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location">
+    </div>
+
+    <div>
+        <input type="submit" value="Add Interaction">
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var startInput = document.getElementById('started');
+        var endInput = document.getElementById('ended');
+
+        startInput.addEventListener('change', function() {
+            if (endInput.value < startInput.value) {
+                endInput.value = startInput.value;
+            }
+        });
+
+        endInput.addEventListener('change', function() {
+            if (endInput.value < startInput.value) {
+                alert('End time cannot be before start time');
+                endInput.value = startInput.value;
+            }
+        });
+    });
+</script>
+{{/ content}}
+
+{{/ /layout}}

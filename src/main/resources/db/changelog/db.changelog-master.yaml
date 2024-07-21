@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: contacts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: text
+              - column:
+                  name: last_name
+                  type: text
+              - column:
+                  name: email
+                  type: text
+              - column:
+                  name: phone
+                  type: text
+              - column:
+                  name: company
+                  type: text
+
+  - changeSet:
+      id: 2
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: interactions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: contact_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_interaction_contact
+                    references: contacts(id)
+              - column:
+                  name: type
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: started
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ended
+                  type: timestamp with time zone
+              - column:
+                  name: summary
+                  type: text
+              - column:
+                  name: location
+                  type: text
+        - createIndex:
+            indexName: idx_interaction_contact
+            tableName: interactions
+            columns:
+              - column:
+                  name: contact_id
+  - changeSet:
+      id: 3
+      author: mmurfin
+      changes:
+        - sql:
+            sql: ALTER TABLE interactions ADD CONSTRAINT check_end_after_start CHECK (ended >= started);
