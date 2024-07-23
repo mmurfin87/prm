@@ -11,9 +11,9 @@ public interface InspectContactDetailsRepository
 {
     @SqlQuery("SELECT * FROM contacts WHERE id = :id")
     @RegisterConstructorMapper(ContactDetails.class)
-    ContactDetails inspectContactDetailsById(@Bind("id") long id);
+    ContactDetails inspectContactDetailsById(@Bind("id") String id);
 
     @SqlQuery("SELECT id, started, type, summary FROM interactions WHERE contact_id = :contactId ORDER BY started DESC")
     @RegisterConstructorMapper(InteractionSummary.class)
-    List<InteractionSummary> inspectContactInteractions(@Bind long contactId);
+    List<InteractionSummary> inspectContactInteractions(@Bind String contactId);
 }

@@ -11,13 +11,14 @@ public interface ListRelationshipTypesRepository
 {
     @SqlQuery("""
         SELECT
-            id,
-            name,
-            origin_male_name originMaleName,
-            origin_female_name originFemaleName,
-            target_male_name targetMaleName,
-            target_female_name targetFemaleName
-        FROM relationship_types""")
+            rt.id,
+            rt.name,
+            rt.counter_relationship_type_id as counterpartId,
+            rti.name as counterpartName
+        FROM relationship_types rt
+        LEFT JOIN relationship_types rti ON
+            rt.counter_relationship_type_id = rti.id
+        """)
     @RegisterConstructorMapper(RelationshipType.class)
     List<RelationshipType> findAll();
 }

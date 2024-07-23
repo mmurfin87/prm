@@ -21,7 +21,7 @@ public class InspectContactDetailsController
 
     @GetMapping({ "{id}", "{id}/edit" })
     @Operation(summary = "Inspect contact details", description = "Retrieves detailed information for a specific contact")
-    public ContactDetailsWithInteractions inspectContactDetails(@PathVariable String id)
+    public CompleteContactDetails inspectContactDetails(@PathVariable String id)
     {
         return inspectContactDetailsUseCase.execute(id);
     }

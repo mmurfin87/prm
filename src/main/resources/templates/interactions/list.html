@@ -1,23 +1,5 @@
 <h3>Interactions</h3>
 
-<style>
-    #no-interactions-row:only-child
-    {
-        display: table-row;
-    }
-
-    #no-interactions-row:not(:only-child)
-    {
-        display: none;
-    }
-    
-    #no-interactions-row > td
-    {
-        text-align: center;
-        vertical-align: middle;
-    }
-</style>
-
 <table>
     <thead>
         <tr>
@@ -41,7 +23,7 @@
             </td>
         </tr>
         {{/interactions}}
-        <tr id="no-interactions-row">
+        <tr class="no-children-table-row">
             <td colspan="4">No Interactions</td>
         </tr>
     </tbody>

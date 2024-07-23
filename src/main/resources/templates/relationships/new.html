@@ -1,0 +1,48 @@
+{{< /layout}}
+
+{{$ title}}Add New Relationship{{/ title}}
+
+{{$ content}}
+<h2>Add New Relationship</h2>
+
+<form action="/relationships" method="POST">
+    
+    <div>
+        <label for="originContactId">Contact:</label>
+        <select id="originContactId" name="originContactId" required>
+            {{# originContactOptions}}
+                <option {{# selected}}selected{{/ selected}} value="{{id}}">{{name}}</option>
+            {{/ originContactOptions}}
+        </select>
+    </div>
+
+    <div>
+        <label for="targetContactId">Contact:</label>
+        <select id="targetContactId" name="targetContactId" required>
+            {{# targetContactOptions}}
+                <option {{# selected}}selected{{/ selected}} value="{{id}}">{{name}}</option>
+            {{/ targetContactOptions}}
+        </select>
+    </div>
+
+    <div>
+        <label for="relationshipTypeId">Relationship Type:</label>
+        <select id="relationshipTypeId" name="relationshipTypeId" required>
+            {{# relationshipTypeOptions}}
+                <option {{# selected}}selected{{/ selected}} value="{{id}}">{{name}}</option>
+            {{/ relationshipTypeOptions}}
+        </select>
+    </div>
+
+    <div>
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes" rows="4" cols="50">{{notes}}</textarea>
+    </div>
+
+    <div>
+        <input type="submit" value="Add Relationship">
+    </div>
+</form>
+{{/ content}}
+
+{{/ /layout}}

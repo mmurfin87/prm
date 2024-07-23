@@ -13,6 +13,10 @@ import com.yourcompany.personalcrm.contacts.listcontacts.ListContactsRepository;
 import com.yourcompany.personalcrm.contacts.updatecontact.UpdateContactRepository;
 import com.yourcompany.personalcrm.interactions.addinteraction.AddInteractionRepository;
 import com.yourcompany.personalcrm.interactions.deleteinteraction.DeleteInteractionRepository;
+import com.yourcompany.personalcrm.relationships.addrelationship.AddRelationshipRepository;
+import com.yourcompany.personalcrm.relationships.deleterelationship.DeleteRelationshipRepository;
+import com.yourcompany.personalcrm.relationships.inspectcontactrelationships.InspectContactRelationshipRepository;
+import com.yourcompany.personalcrm.relationships.listrelationships.ListRelationshipsRepository;
 import com.yourcompany.personalcrm.relationshiptypes.addrelationshiptype.AddRelationshipTypeRepository;
 import com.yourcompany.personalcrm.relationshiptypes.deleterelationshiptype.DeleteRelationshipTypeRepository;
 import com.yourcompany.personalcrm.relationshiptypes.listrelationshiptypes.ListRelationshipTypesRepository;
@@ -101,5 +105,29 @@ public class JdbiConfiguration
     public DeleteRelationshipTypeRepository deleteRelationshipTypeRepository(@NonNull final Jdbi jdbi)
     {
         return jdbi.onDemand(DeleteRelationshipTypeRepository.class);
+    }
+
+    @Bean
+    public AddRelationshipRepository addRelationshipRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(AddRelationshipRepository.class);
+    }
+
+    @Bean
+    public InspectContactRelationshipRepository inspectContactRelationshipRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(InspectContactRelationshipRepository.class);
+    }
+
+    @Bean
+    public DeleteRelationshipRepository deleteRelationshipRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(DeleteRelationshipRepository.class);
+    }
+
+    @Bean
+    public ListRelationshipsRepository listRelationshipsRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(ListRelationshipsRepository.class);
     }
 }

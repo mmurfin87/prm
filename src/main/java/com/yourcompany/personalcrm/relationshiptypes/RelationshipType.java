@@ -10,12 +10,6 @@ public class RelationshipType
     public final String id;
     @NonNull
     public final String name;
-    @NonNull
-    public final String originMaleName;
-    @NonNull
-    public final String originFemaleName;
-    @NonNull
-    public final String targetMaleName;
-    @NonNull
-    public final String targetFemaleName;
+    public final String counterpartId;
+    public final String counterpartName;
 }

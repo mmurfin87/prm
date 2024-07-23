@@ -46,7 +46,9 @@ public class AddRelationshipTypeController
         }))
     public RelationshipType addRelationshipTypeJson(@NonNull @RequestBody final AddRelationshipTypeRequest request)
     {
-        return addRelationshipTypeUseCase.execute(request);
+        return request.counterName == null
+            ? addRelationshipTypeUseCase.execute(request.name)
+            : addRelationshipTypeUseCase.executeCounterPair(request.name, request.counterName).get(0);
     }
 
     @Hidden
@@ -54,6 +56,8 @@ public class AddRelationshipTypeController
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public RelationshipType addRelationshipTypeForm(@NonNull @ModelAttribute final AddRelationshipTypeRequest request)
     {
-        return addRelationshipTypeUseCase.execute(request);
+        return request.counterName == null
+            ? addRelationshipTypeUseCase.execute(request.name)
+            : addRelationshipTypeUseCase.executeCounterPair(request.name, request.counterName).get(0);
     }
 }

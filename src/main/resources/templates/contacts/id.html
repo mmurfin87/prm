@@ -8,10 +8,14 @@
 <p>Phone: {{contactDetails.phone}}</p>
 <p>Company: {{contactDetails.company}}</p>
 
-{{> /interactions/list}}
+<a href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a>
 
-<a href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a> | 
+{{> /interactions/list}}
 <a href="/interactions/new?for-contact-id={{contactDetails.id}}">Add Interaction</a>
+
+{{> /relationships/for-contact-list}}
+
+<a href="/relationships/new?for-contact-id={{contactDetails.id}}">Add Relationship</a>
 
 {{/ content}}
 {{/ /layout}}
