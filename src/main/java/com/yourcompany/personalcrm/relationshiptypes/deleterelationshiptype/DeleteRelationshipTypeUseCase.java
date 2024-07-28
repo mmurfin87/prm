@@ -16,6 +16,7 @@ public class DeleteRelationshipTypeUseCase
 
     public void execute(String id)
     {
+        repository.clearCounterpartReferences(id);
         final int deletedCount = repository.delete(id);
         if (deletedCount == 0)
         {

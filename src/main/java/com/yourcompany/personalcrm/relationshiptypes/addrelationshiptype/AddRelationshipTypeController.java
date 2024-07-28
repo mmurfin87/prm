@@ -13,8 +13,6 @@ import com.yourcompany.personalcrm.relationshiptypes.RelationshipType;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -46,17 +44,17 @@ public class AddRelationshipTypeController
         }))
     public RelationshipType addRelationshipTypeJson(@NonNull @RequestBody final AddRelationshipTypeRequest request)
     {
-        return request.counterName == null
+        return request.counterName == null || request.counterName.isBlank()
             ? addRelationshipTypeUseCase.execute(request.name)
             : addRelationshipTypeUseCase.executeCounterPair(request.name, request.counterName).get(0);
     }
 
     @Hidden
-    @PostRedirectGet("contacts")
+    @PostRedirectGet("relationship-types")
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public RelationshipType addRelationshipTypeForm(@NonNull @ModelAttribute final AddRelationshipTypeRequest request)
     {
-        return request.counterName == null
+        return request.counterName == null || request.counterName.isBlank()
             ? addRelationshipTypeUseCase.execute(request.name)
             : addRelationshipTypeUseCase.executeCounterPair(request.name, request.counterName).get(0);
     }

@@ -52,7 +52,6 @@ public class AddContactController
     @Hidden
     @PostRedirectGet
     @View("contacts/created")
-    @Operation(summary = "Add a new contact", description = "Adds a new contact to the system")
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public AddContactResponse addContactForm(@NonNull @ModelAttribute final AddContactRequest request)
     {

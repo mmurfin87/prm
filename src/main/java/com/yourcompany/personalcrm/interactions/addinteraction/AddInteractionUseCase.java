@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.yourcompany.personalcrm.util.FormOption;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +22,14 @@ public class AddInteractionUseCase
 
     public AddInteractionForm prepareAddInteractionForm(String forContactId)
     {
-        final Map<String, String> result = repository.getContactIdNameMap();
-        return new AddInteractionForm(result.entrySet().stream()
-                .map(e -> new AddInteractionContactOption(e.getKey(), e.getValue(), e.getKey().equalsIgnoreCase(forContactId)))
+        final Map<String, String> contacts = repository.getContactIdNameMap();
+        final Map<String, String> interactionTypes = repository.getInteractionTypes();
+        return new AddInteractionForm(
+            contacts.entrySet().stream()
+                .map(e -> new FormOption(e.getKey(), e.getValue(), e.getKey().equalsIgnoreCase(forContactId)))
+                .toList(),
+            interactionTypes.entrySet().stream()
+                .map(e -> new FormOption(e.getKey(), e.getValue(), false))
                 .toList(),
             null,
             LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),

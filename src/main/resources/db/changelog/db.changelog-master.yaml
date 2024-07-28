@@ -15,19 +15,25 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: first_name
-                  type: text
+                  type: varchar
               - column:
                   name: last_name
-                  type: text
+                  type: varchar
+              - column:
+                  name: birthdate
+                  type: date
+              - column:
+                  name: gender
+                  type: varchar(6)
               - column:
                   name: email
-                  type: text
+                  type: varchar
               - column:
                   name: phone
-                  type: text
+                  type: varchar
               - column:
                   name: company
-                  type: text
+                  type: varchar
 
   - changeSet:
       id: 2
@@ -53,7 +59,7 @@ databaseChangeLog:
                     deleteCascade: true
               - column:
                   name: type
-                  type: text
+                  type: varchar
                   constraints:
                     nullable: false
               - column:
@@ -66,10 +72,10 @@ databaseChangeLog:
                   type: timestamp with time zone
               - column:
                   name: summary
-                  type: text
+                  type: varchar
               - column:
                   name: location
-                  type: text
+                  type: varchar
         - createIndex:
             indexName: idx_interaction_contact
             tableName: interactions
@@ -98,7 +104,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: name
-                  type: text
+                  type: varchar
                   constraints:
                     nullable: false
               - column:
@@ -146,10 +152,235 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_relationship_type
                     references: relationship_types(id)
+                    deleteCascade: true
               - column:
                   name: notes
-                  type: text
+                  type: varchar
         - addUniqueConstraint:
             columnNames: origin_contact_id, target_contact_id, relationship_type_id
             constraintName: uk_relationship
             tableName: relationships
+  - changeSet:
+      id: 6
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: interaction_types
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: interaction_types
+            columnNames: name
+            constraintName: uk_interaction_types_name
+  - changeSet:
+      id: 7
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: field_types
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: package
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: base_type_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_field_type_base_type
+                    references: field_types(id)
+              - column:
+                  name: description
+                  type: varchar
+        - addUniqueConstraint:
+            tableName: field_types
+            columnNames: name, package
+            constraintName: uk_field_type_name_package
+        - createIndex:
+            indexName: idx_field_type_base_type
+            tableName: field_types
+            columns:
+              - column:
+                  name: base_type_id
+  - changeSet:
+      id: 8
+      author: mmurfin
+      changes:
+        - loadData:
+            tableName: field_types
+            file: classpath:db/data/core_field_types.csv
+            separator: ','
+            encoding: UTF-8
+            columns:
+              - column:
+                  name: name
+                  type: STRING
+              - column:
+                  name: package
+                  type: STRING
+              - column:
+                  name: description
+                  type: STRING
+  - changeSet:
+      id: 9
+      author: mmurfin
+      changes:
+        - createTable:
+            tableName: dynamic_fields
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: parent_field_type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_dynamic_field_parent_type
+                    references: field_types(id)
+              - column:
+                  name: field_type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_dynamic_field_type
+                    references: field_types(id)
+              - column:
+                  name: is_required
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: default_value
+                  type: varchar
+        - createTable:
+            tableName: dynamic_entities
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: field_type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_dynamic_entity_type
+                    references: field_types(id)
+        - createTable:
+            tableName: dynamic_field_values
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: dynamic_entity_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_dynamic_field_value_entity
+                    references: dynamic_entities(id)
+              - column:
+                  name: dynamic_field_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_dynamic_field_value_field
+                    references: dynamic_fields(id)
+              - column:
+                  name: target_entity_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_dynamic_field_value_target_entity
+                    references: dynamic_entities(id)
+              - column:
+                  name: value_literal
+                  type: varchar
+        - sql:
+            sql: >
+              ALTER TABLE dynamic_field_values 
+              ADD CONSTRAINT chk_value_or_target_entity CHECK 
+              (
+                (value_literal IS NOT NULL AND target_entity_id IS NULL)
+                OR
+                (value_literal IS NULL AND target_entity_id IS NOT NULL)
+              );
+        - createIndex:
+            indexName: idx_dynamic_field_value_target_entity
+            tableName: dynamic_field_values
+            columns:
+              - column:
+                  name: target_entity_id
+        - createIndex:
+            indexName: idx_dynamic_field_parent_type
+            tableName: dynamic_fields
+            columns:
+              - column:
+                  name: parent_field_type_id
+        - createIndex:
+            indexName: idx_dynamic_field_type
+            tableName: dynamic_fields
+            columns:
+              - column:
+                  name: field_type_id
+        - createIndex:
+            indexName: idx_dynamic_entity_type
+            tableName: dynamic_entities
+            columns:
+              - column:
+                  name: field_type_id
+        - createIndex:
+            indexName: idx_dynamic_field_value_entity
+            tableName: dynamic_field_values
+            columns:
+              - column:
+                  name: dynamic_entity_id
+        - createIndex:
+            indexName: idx_dynamic_field_value_field
+            tableName: dynamic_field_values
+            columns:
+              - column:
+                  name: dynamic_field_id

@@ -1,1 +1,11 @@
-{{> /contacts/index}}
+{{< /layout}}
+
+{{$ title}}Contacts{{/ title}}
+
+{{$ content}}
+<h2>Contacts</h2>
+{{> /contacts/list}}
+<a href="/contacts/new">Add Contact</a>
+{{/ content}}
+
+{{/ /layout}}

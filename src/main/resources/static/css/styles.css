@@ -31,7 +31,6 @@ main {
 }
 
 table {
-    width: 100%;
     border-collapse: collapse;
 }
 
@@ -47,7 +46,6 @@ form label {
 }
 
 form input {
-    width: 100%;
     padding: 5px;
     margin-top: 5px;
 }

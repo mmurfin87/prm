@@ -1,0 +1,48 @@
+{{< /layout}}
+
+{{$ title}}Custom Fields{{/ title}}
+
+{{$ content}}
+<h2>Field Types</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Package</th>
+            <th>Description</th>
+            <th>Base Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{# .}}
+        <tr>
+            {{# fields.isEmpty}}<td>{{name}}</td>{{/ fields.isEmpty}}
+            {{^ fields.isEmpty}}
+            <td>
+                <div>{{name}}</div>
+                <ul>{{#fields}}
+                    <li>{{name}}{{#isRequired}}*{{/isRequired}} ({{fieldTypeName}}){{#defaultValue}} (Default: {{defaultValue}}){{/defaultValue}}</li>
+                {{/ fields}}</ul>
+            </td>
+            {{/ fields.isEmpty}}
+            <td>{{pkg}}</td>
+            <td>{{description}}</td>
+            <td>{{baseTypeName}}</td>
+            <td>
+                {{# isCustom}}
+                <form method="POST" action="/field-types/{{id}}/delete" onsubmit="return confirm('Are you sure you want to delete this field type?');">
+                    <button type="submit">Delete</button>
+                </form>
+                {{/ isCustom}}
+            </td>
+        </tr>
+        {{/ .}}
+    </tbody>
+</table>
+
+<a href="/field-types/new">Add New Custom Field Type</a>
+{{/ content}}
+
+{{/ /layout}}

@@ -11,14 +11,18 @@
         <label for="contactId">Contact:</label>
         <select id="contactId" name="contactId" required>
             {{# contactOptions}}
-                <option {{# selected}}selected{{/ selected}} value="{{id}}">{{name}}</option>
+                <option {{# selected}}selected{{/ selected}} value="{{value}}">{{text}}</option>
             {{/ contactOptions}}
         </select>
     </div>
 
     <div>
         <label for="type">Type:</label>
-        <input type="text" id="type" name="type" value="{{type}}" required>
+        <select id="type" name="type" required>
+            {{# typeOptions}}
+                <option {{# selected}}selected{{/ selected}} value="{{value}}">{{text}}</option>
+            {{/ typeOptions}}
+        </select>
     </div>
 
     <div>

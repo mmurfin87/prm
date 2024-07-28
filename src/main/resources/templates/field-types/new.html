@@ -1,0 +1,104 @@
+{{< /layout}}
+
+{{$ title}}Add Field Type{{/ title}}
+
+{{$ content}}
+<h2>Add Custom Field Type</h2>
+
+<form action="/field-types" method="POST">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+    </div>
+    <div>
+        <label for="baseTypeId">Base Type:</label>
+        <select id="baseTypeId" name="baseTypeId">
+            <option value="">--Select--</option>
+            {{#baseTypeOptions}}
+            <option value="{{value}}"{{# selected}} selected {{/selected}}>{{text}}</option>
+            {{/baseTypeOptions}}
+        </select>
+    </div>
+    <div id="dynamicFields">
+        <!-- Dynamic fields will be added here -->
+    </div>
+    <button type="button" id="addField" hidden="true">Add Field</button>
+    <button type="submit">Create Custom Field Type</button>
+</form>
+
+<script>
+    const fieldTypeOptions = {{{javascriptArrayBaseTypeOptions}}};
+    const objectTypeId = fieldTypeOptions.filter(e => e.text == "Object")[0].value;
+    let fieldCount = 0;
+
+    document.getElementById("baseTypeId").addEventListener("change", e => fieldTypeSelectChange(e));
+    function fieldTypeSelectChange(event)
+    {
+        console.log(event);
+        if (event.target.value != objectTypeId)
+        {
+            addField.hidden = true;
+            const dynamicFieldsDiv = document.getElementById("dynamicFields");
+            while (dynamicFieldsDiv.hasChildNodes())
+                dynamicFieldsDiv.removeChild(dynamicFieldsDiv.lastChild);
+        }
+        else
+        {
+            addField.hidden = false;
+        }
+    }
+
+    function element(name, attributes, ...children)
+    {
+        const e = document.createElement(name);
+        for (const [key, value] of Object.entries(attributes))
+            e[key] = value;
+        for (const child of children)
+            e.appendChild(child);
+        return e;
+    }
+    
+    function createFieldTypeOptions()
+    {
+        return fieldTypeOptions.map(e => element(
+            "option", 
+            {"value": e.value, "selected": e.selected}, 
+            document.createTextNode(e.text)));
+    }
+
+    document.getElementById('addField').addEventListener('click', function() {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.innerHTML = `
+            <h4>Field ${fieldCount + 1}</h4>
+            <div>
+                <label for="fields[${fieldCount}].name">Name:</label>
+                <input type="text" id="fields[${fieldCount}]" name="fields[${fieldCount}].name" required>
+            </div>
+            <div>
+                <label for="fields[${fieldCount}].fieldTypeId">Type:</label>
+                <select id="fields_${fieldCount}" name="fields[${fieldCount}].fieldTypeId" required></select>
+            </div>
+            <div>
+                <label for="fields[${fieldCount}].isRequired">Required:</label>
+                <input type="checkbox" name="fields[${fieldCount}].isRequired">
+            </div>
+            <div>
+                <label for="fields[${fieldCount}].defaultValue">Default Value:</label>
+                <input type="text" name="fields[${fieldCount}].defaultValue">
+            </div>
+        `;
+        const typeSelect = fieldDiv.querySelector(`#fields_${fieldCount}`);
+        const fieldTypeOptions = createFieldTypeOptions();
+        for (const option of fieldTypeOptions)
+            typeSelect.appendChild(option);
+        document.getElementById('dynamicFields').appendChild(fieldDiv);
+        fieldCount++;
+    });
+</script>
+{{/ content}}
+
+{{/ /layout}}

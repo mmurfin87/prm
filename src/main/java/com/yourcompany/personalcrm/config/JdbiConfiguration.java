@@ -11,8 +11,14 @@ import com.yourcompany.personalcrm.contacts.deletecontact.DeleteContactRepositor
 import com.yourcompany.personalcrm.contacts.inspectcontactdetails.InspectContactDetailsRepository;
 import com.yourcompany.personalcrm.contacts.listcontacts.ListContactsRepository;
 import com.yourcompany.personalcrm.contacts.updatecontact.UpdateContactRepository;
+import com.yourcompany.personalcrm.fieldtypes.addcustomfieldtype.AddCustomFieldTypeRepository;
+import com.yourcompany.personalcrm.fieldtypes.deletecustomfieldtype.DeleteCustomFieldTypeRepository;
+import com.yourcompany.personalcrm.fieldtypes.listfieldtypes.ListFieldTypesRepository;
 import com.yourcompany.personalcrm.interactions.addinteraction.AddInteractionRepository;
 import com.yourcompany.personalcrm.interactions.deleteinteraction.DeleteInteractionRepository;
+import com.yourcompany.personalcrm.interactiontypes.addinteractiontype.AddInteractionTypeRepository;
+import com.yourcompany.personalcrm.interactiontypes.deleteinteractiontype.DeleteInteractionTypeRepository;
+import com.yourcompany.personalcrm.interactiontypes.listinteractiontypes.ListInteractionTypesRepository;
 import com.yourcompany.personalcrm.relationships.addrelationship.AddRelationshipRepository;
 import com.yourcompany.personalcrm.relationships.deleterelationship.DeleteRelationshipRepository;
 import com.yourcompany.personalcrm.relationships.inspectcontactrelationships.InspectContactRelationshipRepository;
@@ -129,5 +135,41 @@ public class JdbiConfiguration
     public ListRelationshipsRepository listRelationshipsRepository(@NonNull final Jdbi jdbi)
     {
         return jdbi.onDemand(ListRelationshipsRepository.class);
+    }
+
+    @Bean
+    public AddInteractionTypeRepository addInteractionTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(AddInteractionTypeRepository.class);
+    }
+
+    @Bean
+    public ListInteractionTypesRepository listInteractionTypesRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(ListInteractionTypesRepository.class);
+    }
+
+    @Bean
+    public DeleteInteractionTypeRepository deleteInteractionTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(DeleteInteractionTypeRepository.class);
+    }
+
+    @Bean
+    public AddCustomFieldTypeRepository addCustomFieldTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(AddCustomFieldTypeRepository.class);
+    }
+
+    @Bean
+    public DeleteCustomFieldTypeRepository deleteCustomFieldTypeRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(DeleteCustomFieldTypeRepository.class);
+    }
+
+    @Bean
+    public ListFieldTypesRepository listFieldTypesRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(ListFieldTypesRepository.class);
     }
 }

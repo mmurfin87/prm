@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ListContactsRepository
 {
-    @SqlQuery("SELECT id, first_name, last_name, email, phone FROM contacts")
+    @SqlQuery("SELECT id, first_name, last_name, birthdate, DATEDIFF(YEAR, birthdate, CURRENT_DATE()) as age, gender FROM contacts")
     @RegisterConstructorMapper(value = ContactSummary.class)
     List<ContactSummary> listContacts();
 }

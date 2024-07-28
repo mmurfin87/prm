@@ -19,4 +19,9 @@ public interface AddInteractionRepository
     @ValueColumn("full_name")
     @SqlQuery("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM contacts")
     Map<String, String> getContactIdNameMap();
+
+    @KeyColumn("id")
+    @ValueColumn("name")
+    @SqlQuery("SELECT id, name FROM interaction_types")
+    Map<String, String> getInteractionTypes();
 }

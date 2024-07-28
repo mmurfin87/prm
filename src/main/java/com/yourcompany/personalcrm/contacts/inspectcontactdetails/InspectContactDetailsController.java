@@ -19,7 +19,7 @@ public class InspectContactDetailsController
     @NonNull
     private final InspectContactDetailsUseCase inspectContactDetailsUseCase;
 
-    @GetMapping({ "{id}", "{id}/edit" })
+    @GetMapping("{id}")
     @Operation(summary = "Inspect contact details", description = "Retrieves detailed information for a specific contact")
     public CompleteContactDetails inspectContactDetails(@PathVariable String id)
     {
