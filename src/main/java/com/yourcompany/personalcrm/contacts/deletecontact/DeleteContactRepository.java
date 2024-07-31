@@ -5,6 +5,6 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface DeleteContactRepository
 {
-    @SqlUpdate("DELETE FROM contacts WHERE id = :id AND owner_id = :ownerId")
+    @SqlUpdate("DELETE FROM contacts WHERE id = :contactId AND owner_id = :ownerId")
     boolean deleteContact(@Bind String ownerId, @Bind String contactId);
 }
