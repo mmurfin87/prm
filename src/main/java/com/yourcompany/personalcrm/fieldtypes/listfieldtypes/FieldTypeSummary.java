@@ -17,6 +17,7 @@ public class FieldTypeSummary
     public final String description;
     public final String baseTypeId;
     public final String baseTypeName;
+    public final boolean isInstantiable;
     public final List<DynamicFieldSummary> fields;
 
     public boolean isCustom()

@@ -1,5 +1,6 @@
 package com.yourcompany.personalcrm.fieldtypes.listfieldtypes;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,5 +25,12 @@ public class ListFieldTypesController
     public List<FieldTypeSummary> listFieldTypes()
     {
         return listFieldTypesUseCase.execute();
+    }
+
+    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Inspect Field Type", description = "Retrieve a single field type by id")
+    public FieldTypeSummary inspectFieldType(@NonNull @PathVariable final String id)
+    {
+        return listFieldTypesUseCase.inspectFieldType(id);
     }
 }

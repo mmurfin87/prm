@@ -4,6 +4,73 @@ databaseChangeLog:
       author: mmurfin
       changes:
         - createTable:
+            tableName: app_users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp with time zone
+              - column:
+                  name: last_login
+                  type: timestamp with time zone
+              - column:
+                  name: username
+                  type: text
+              - column:
+                  name: email
+                  type: text
+              - column:
+                  name: hash_of_secret
+                  type: text
+        - createTable:
+            tableName: user_tokens
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_app_user_tokens
+                    references: app_users(id)
+                    deleteCascade: true
+              - column:
+                  name: token
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uk_user_tokens_token
+              - column:
+                  name: token_type
+                  type: text
+              - column:
+                  name: expiration
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
+  - changeSet:
+      id: 2
+      author: mmurfin
+      changes:
+        - createTable:
             tableName: contacts
             columns:
               - column:
@@ -14,29 +81,42 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_app_users_contacts
+                    references: app_users(id)
+                    deleteCascade: true
+              - column:
                   name: first_name
-                  type: varchar
+                  type: text
               - column:
                   name: last_name
-                  type: varchar
+                  type: text
               - column:
                   name: birthdate
                   type: date
               - column:
                   name: gender
-                  type: varchar(6)
+                  type: text(6)
               - column:
                   name: email
-                  type: varchar
+                  type: text
               - column:
                   name: phone
-                  type: varchar
+                  type: text
               - column:
                   name: company
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
 
   - changeSet:
-      id: 2
+      id: 3
       author: mmurfin
       changes:
         - createTable:
@@ -50,6 +130,14 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_app_users_interactions
+                    references: app_users(id)
+                    deleteCascade: true
+              - column:
                   name: contact_id
                   type: bigint
                   constraints:
@@ -59,7 +147,7 @@ databaseChangeLog:
                     deleteCascade: true
               - column:
                   name: type
-                  type: varchar
+                  type: text
                   constraints:
                     nullable: false
               - column:
@@ -72,10 +160,15 @@ databaseChangeLog:
                   type: timestamp with time zone
               - column:
                   name: summary
-                  type: varchar
+                  type: text
               - column:
                   name: location
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - createIndex:
             indexName: idx_interaction_contact
             tableName: interactions
@@ -83,13 +176,13 @@ databaseChangeLog:
               - column:
                   name: contact_id
   - changeSet:
-      id: 3
+      id: 4
       author: mmurfin
       changes:
         - sql:
             sql: ALTER TABLE interactions ADD CONSTRAINT check_end_after_start CHECK (ended >= started);
   - changeSet:
-      id: 4
+      id: 5
       author: mmurfin
       changes:
         - createTable:
@@ -103,8 +196,16 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_app_users_relationship_types
+                    references: app_users(id)
+                    deleteCascade: true
+              - column:
                   name: name
-                  type: varchar
+                  type: text
                   constraints:
                     nullable: false
               - column:
@@ -115,8 +216,13 @@ databaseChangeLog:
                     foreignKeyName: fk_relationship_type_implication
                     references: relationship_types(id)
                     deleteCascade: false
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
   - changeSet:
-      id: 5
+      id: 6
       author: mmurfin
       changes:
         - createTable:
@@ -129,6 +235,14 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+              - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_app_users_relationships
+                    references: app_users(id)
+                    deleteCascade: true
               - column:
                   name: origin_contact_id
                   type: bigint
@@ -155,13 +269,18 @@ databaseChangeLog:
                     deleteCascade: true
               - column:
                   name: notes
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - addUniqueConstraint:
             columnNames: origin_contact_id, target_contact_id, relationship_type_id
             constraintName: uk_relationship
             tableName: relationships
   - changeSet:
-      id: 6
+      id: 7
       author: mmurfin
       changes:
         - createTable:
@@ -175,16 +294,29 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: owner_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_app_users_interaction_types
+                    references: app_users(id)
+                    deleteCascade: true
+              - column:
                   name: name
-                  type: varchar
+                  type: text
                   constraints:
                     nullable: false
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - addUniqueConstraint:
             tableName: interaction_types
             columnNames: name
             constraintName: uk_interaction_types_name
   - changeSet:
-      id: 7
+      id: 8
       author: mmurfin
       changes:
         - createTable:
@@ -198,16 +330,6 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: package
-                  type: varchar
-                  constraints:
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar
-                  constraints:
-                    nullable: false
-              - column:
                   name: base_type_id
                   type: bigint
                   constraints:
@@ -215,8 +337,29 @@ databaseChangeLog:
                     foreignKeyName: fk_field_type_base_type
                     references: field_types(id)
               - column:
+                  name: is_instantiable
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: package
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
                   name: description
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - addUniqueConstraint:
             tableName: field_types
             columnNames: name, package
@@ -228,7 +371,7 @@ databaseChangeLog:
               - column:
                   name: base_type_id
   - changeSet:
-      id: 8
+      id: 9
       author: mmurfin
       changes:
         - loadData:
@@ -246,8 +389,11 @@ databaseChangeLog:
               - column:
                   name: description
                   type: STRING
+              - column:
+                  name: is_instantiable
+                  type: BOOLEAN
   - changeSet:
-      id: 9
+      id: 10
       author: mmurfin
       changes:
         - createTable:
@@ -263,6 +409,7 @@ databaseChangeLog:
               - column:
                   name: parent_field_type_id
                   type: bigint
+                  remarks: this is the type of object to which this field belongs
                   constraints:
                     nullable: false
                     foreignKeyName: fk_dynamic_field_parent_type
@@ -270,6 +417,7 @@ databaseChangeLog:
               - column:
                   name: field_type_id
                   type: bigint
+                  remarks: this is the type of field this is
                   constraints:
                     nullable: false
                     foreignKeyName: fk_dynamic_field_type
@@ -282,12 +430,17 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: name
-                  type: varchar
+                  type: text
                   constraints:
                     nullable: false
               - column:
                   name: default_value
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - createTable:
             tableName: dynamic_entities
             columns:
@@ -305,6 +458,11 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_dynamic_entity_type
                     references: field_types(id)
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
         - createTable:
             tableName: dynamic_field_values
             columns:
@@ -338,7 +496,16 @@ databaseChangeLog:
                     references: dynamic_entities(id)
               - column:
                   name: value_literal
-                  type: varchar
+                  type: text
+        - modifySql:
+            dbms: h2
+            replace:
+              replace: CLOB
+              with: varchar
+        - addUniqueConstraint:
+            tableName: dynamic_field_values
+            columnNames: dynamic_entity_id, dynamic_field_id
+            constraintName: uk_field_values_singletons
         - sql:
             sql: >
               ALTER TABLE dynamic_field_values 

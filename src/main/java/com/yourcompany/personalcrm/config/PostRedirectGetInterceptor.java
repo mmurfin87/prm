@@ -47,6 +47,8 @@ public class PostRedirectGetInterceptor implements HandlerInterceptor
                 redirectUrl = request.getRequestURL().toString();
                 log.info("4. redirectUrl: {}", redirectUrl);
         }
+        else if (!redirectUrl.startsWith("/"))
+            redirectUrl = "/" + redirectUrl;
         
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);
         response.setHeader("Location", redirectUrl);

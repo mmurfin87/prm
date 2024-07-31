@@ -52,6 +52,6 @@ public interface AddRelationshipRepository
     List<RelationshipType> availableRelationshipTypesForContactPair(@Bind String originContactId, @Bind String targetContactId);
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO relationships (origin_contact_id, target_contact_id, relationship_type_id, notes) VALUES (:originContactId, :TargetContactId, :relationshipTypeId, :notes)")
-    String addRelationship(@Bind String originContactId, @Bind String TargetContactId, @Bind String relationshipTypeId, @Bind String notes);
+    @SqlUpdate("INSERT INTO relationships (owner_id, origin_contact_id, target_contact_id, relationship_type_id, notes) VALUES (:ownerId, :originContactId, :TargetContactId, :relationshipTypeId, :notes)")
+    String addRelationship(@Bind String ownerId, @Bind String originContactId, @Bind String TargetContactId, @Bind String relationshipTypeId, @Bind String notes);
 }

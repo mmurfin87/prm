@@ -17,6 +17,7 @@ public class AddCustomFieldTypeReducer implements LinkedHashMapRowReducer<String
             id,
             rowView.getColumn("name", String.class),
             rowView.getColumn("package", String.class),
+            rowView.getColumn("is_instantiable", Boolean.class),
             rowView.getColumn("description", String.class),
             rowView.getColumn("base_type_id", String.class),
             new ArrayList<>()

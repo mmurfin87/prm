@@ -5,6 +5,6 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface DeleteInteractionRepository 
 {
-    @SqlUpdate("DELETE FROM interactions WHERE id = :id")
-    int deleteById(@Bind String id);
+    @SqlUpdate("DELETE FROM interactions WHERE owner_id = :ownerId AND id = :id")
+    int deleteById(@Bind String ownerId, @Bind String id);
 }

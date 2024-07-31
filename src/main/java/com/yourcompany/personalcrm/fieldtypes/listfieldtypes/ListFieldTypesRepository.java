@@ -9,12 +9,13 @@ import java.util.List;
 public interface ListFieldTypesRepository
 {
     public static final String BASE_QUERY = """
-        WITH RECURSIVE field_type_hierarchy (id, name, package, description, base_type_id, base_type_name, level) AS
+        WITH RECURSIVE field_type_hierarchy (id, package, name, is_instantiable, description, base_type_id, base_type_name, level) AS
         (
             SELECT 
                 c.id, 
-                c.name, 
                 c.package, 
+                c.name, 
+                c.is_instantiable,
                 c.description, 
                 c.base_type_id,
                 null,
@@ -27,8 +28,9 @@ public interface ListFieldTypesRepository
             
             SELECT 
                 ft.id, 
-                ft.name, 
                 ft.package,
+                ft.name, 
+                ft.is_instantiable,
                 ft.description,
                 ft.base_type_id,
                 fth.name as base_type_name,
@@ -42,6 +44,7 @@ public interface ListFieldTypesRepository
             fth.name,
             fth.package,
             fth.description,
+            fth.is_instantiable,
             fth.base_type_id,
             fth.base_type_name,
             df.id as field_id,
@@ -56,6 +59,10 @@ public interface ListFieldTypesRepository
         LEFT JOIN field_types ft ON
             df.field_type_id = ft.id
         """;
+
+    @SqlQuery(BASE_QUERY + "WHERE fth.id = :id")
+    @UseRowReducer(FieldTypeSummaryReducer.class)
+    FieldTypeSummary inspectFieldType(@Bind String id);
     
     @SqlQuery(BASE_QUERY + "ORDER BY fth.level, fth.package, fth.name")
     @UseRowReducer(FieldTypeSummaryReducer.class)

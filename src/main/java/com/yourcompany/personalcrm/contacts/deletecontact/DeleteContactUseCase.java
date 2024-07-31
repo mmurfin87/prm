@@ -2,6 +2,8 @@ package com.yourcompany.personalcrm.contacts.deletecontact;
 
 import org.springframework.stereotype.Service;
 
+import com.yourcompany.personalcrm.login.User;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -14,7 +16,7 @@ public class DeleteContactUseCase
 
     public void execute(String contactId)
     {
-        if (!repository.deleteContact(contactId))
+        if (!repository.deleteContact(User.identify(), contactId))
             throw new IllegalArgumentException("No such contact");
     }
 }

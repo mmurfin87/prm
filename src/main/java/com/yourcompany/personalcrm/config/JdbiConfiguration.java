@@ -12,13 +12,16 @@ import com.yourcompany.personalcrm.contacts.inspectcontactdetails.InspectContact
 import com.yourcompany.personalcrm.contacts.listcontacts.ListContactsRepository;
 import com.yourcompany.personalcrm.contacts.updatecontact.UpdateContactRepository;
 import com.yourcompany.personalcrm.fieldtypes.addcustomfieldtype.AddCustomFieldTypeRepository;
+import com.yourcompany.personalcrm.fieldtypes.createinstance.CreateInstanceRepository;
 import com.yourcompany.personalcrm.fieldtypes.deletecustomfieldtype.DeleteCustomFieldTypeRepository;
 import com.yourcompany.personalcrm.fieldtypes.listfieldtypes.ListFieldTypesRepository;
+import com.yourcompany.personalcrm.fieldtypes.listinstances.ListInstancesRepository;
 import com.yourcompany.personalcrm.interactions.addinteraction.AddInteractionRepository;
 import com.yourcompany.personalcrm.interactions.deleteinteraction.DeleteInteractionRepository;
 import com.yourcompany.personalcrm.interactiontypes.addinteractiontype.AddInteractionTypeRepository;
 import com.yourcompany.personalcrm.interactiontypes.deleteinteractiontype.DeleteInteractionTypeRepository;
 import com.yourcompany.personalcrm.interactiontypes.listinteractiontypes.ListInteractionTypesRepository;
+import com.yourcompany.personalcrm.login.UserDetailsServiceRepository;
 import com.yourcompany.personalcrm.relationships.addrelationship.AddRelationshipRepository;
 import com.yourcompany.personalcrm.relationships.deleterelationship.DeleteRelationshipRepository;
 import com.yourcompany.personalcrm.relationships.inspectcontactrelationships.InspectContactRelationshipRepository;
@@ -26,6 +29,7 @@ import com.yourcompany.personalcrm.relationships.listrelationships.ListRelations
 import com.yourcompany.personalcrm.relationshiptypes.addrelationshiptype.AddRelationshipTypeRepository;
 import com.yourcompany.personalcrm.relationshiptypes.deleterelationshiptype.DeleteRelationshipTypeRepository;
 import com.yourcompany.personalcrm.relationshiptypes.listrelationshiptypes.ListRelationshipTypesRepository;
+import com.yourcompany.personalcrm.signup.SignUpRepository;
 
 import lombok.NonNull;
 
@@ -171,5 +175,29 @@ public class JdbiConfiguration
     public ListFieldTypesRepository listFieldTypesRepository(@NonNull final Jdbi jdbi)
     {
         return jdbi.onDemand(ListFieldTypesRepository.class);
+    }
+
+    @Bean
+    public CreateInstanceRepository createInstanceRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(CreateInstanceRepository.class);
+    }
+
+    @Bean
+    public ListInstancesRepository listInstancesRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(ListInstancesRepository.class);
+    }
+
+    @Bean
+    public UserDetailsServiceRepository userDetailsServiceRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(UserDetailsServiceRepository.class);
+    }
+
+    @Bean
+    public SignUpRepository SignUpRepository(@NonNull final Jdbi jdbi)
+    {
+        return jdbi.onDemand(SignUpRepository.class);
     }
 }

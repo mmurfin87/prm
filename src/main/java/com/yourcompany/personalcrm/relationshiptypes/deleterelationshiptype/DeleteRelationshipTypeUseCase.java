@@ -3,6 +3,7 @@ package com.yourcompany.personalcrm.relationshiptypes.deleterelationshiptype;
 import org.springframework.stereotype.Service;
 
 import com.yourcompany.personalcrm.NotFoundException;
+import com.yourcompany.personalcrm.login.User;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -16,8 +17,8 @@ public class DeleteRelationshipTypeUseCase
 
     public void execute(String id)
     {
-        repository.clearCounterpartReferences(id);
-        final int deletedCount = repository.delete(id);
+        repository.clearCounterpartReferences(User.identify(), id);
+        final int deletedCount = repository.delete(User.identify(), id);
         if (deletedCount == 0)
         {
             throw new NotFoundException();

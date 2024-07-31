@@ -1,0 +1,35 @@
+{{< /layout}}
+
+{{$ title}}{{fieldTypeSummary.name}}{{/ title}}
+
+{{$ content}}
+<h2>{{fieldTypeSummary.name}}</h2>
+
+<table>
+    <thead>
+        <tr>
+            {{# fieldTypeSummary.fields}}
+            <th>{{name}}</th>
+            {{/ fieldTypeSummary.fields}}
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{# instances}}
+        <tr>
+            {{# fields}}
+            <td>{{value}}</td>
+            {{/ fields}}
+            <td>
+                <a href="{{id}}">View</a>
+                <a href="{{id}}/edit">Edit</a>
+                <button onclick="deleteContact('{{id}}')">Delete</button>
+            </td>
+        </tr>
+        {{/ instances}}
+    </tbody>
+</table>
+<a href="new">New Instance</a>
+{{/ content}}
+
+{{/ /layout}}

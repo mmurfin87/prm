@@ -31,6 +31,7 @@ public interface AddCustomFieldTypeRepository
     @SqlQuery("""
         SELECT 
             ft.id,
+            ft.is_instantiable,
             ft.name,
             ft.package,
             ft.description,

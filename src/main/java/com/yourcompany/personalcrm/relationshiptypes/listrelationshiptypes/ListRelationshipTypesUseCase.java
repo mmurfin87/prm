@@ -2,6 +2,7 @@ package com.yourcompany.personalcrm.relationshiptypes.listrelationshiptypes;
 
 import org.springframework.stereotype.Service;
 
+import com.yourcompany.personalcrm.login.User;
 import com.yourcompany.personalcrm.relationshiptypes.RelationshipType;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,6 @@ public class ListRelationshipTypesUseCase
 
     public List<RelationshipType> execute()
     {
-        return repository.findAll();
+        return repository.findAll(User.identify());
     }
 }

@@ -16,6 +16,7 @@ public class AddCustomFieldTypeResponse
     public final String name;
     @NonNull
     public final String pkg;
+    public final boolean isInstantiable;
     public final String description;
     public final String baseTypeId;
     public final List<CustomField> fields;

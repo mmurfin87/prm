@@ -8,9 +8,11 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface AddContactRepository
 {
-    @SqlUpdate("INSERT INTO contacts (first_name, last_name, birthdate, gender, email, phone, company) VALUES (:firstName, :lastName, :birthdate, :gender, :email, :phone, :company)")
+    @SqlUpdate("INSERT INTO contacts (owner_id, first_name, last_name, birthdate, gender, email, phone, company) VALUES (:ownerId, :firstName, :lastName, :birthdate, :gender, :email, :phone, :company)")
     @GetGeneratedKeys("id")
-    long insert(@Bind String firstName,
+    long insert(
+        @Bind String ownerId,
+        @Bind String firstName,
         @Bind String lastName,
         @Bind LocalDate birthdate,
         @Bind String gender,

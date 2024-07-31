@@ -19,6 +19,7 @@ public class FieldTypeSummaryReducer implements LinkedHashMapRowReducer<String, 
                 rv.getColumn("description", String.class),
                 rv.getColumn("base_type_id", String.class),
                 rv.getColumn("base_type_name", String.class),
+                rv.getColumn("is_instantiable", Boolean.class),
                 new ArrayList<>()
             ));
         

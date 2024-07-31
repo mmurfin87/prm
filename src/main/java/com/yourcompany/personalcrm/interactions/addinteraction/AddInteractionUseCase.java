@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.yourcompany.personalcrm.login.User;
 import com.yourcompany.personalcrm.util.FormOption;
 
 import lombok.AllArgsConstructor;
@@ -17,9 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AddInteractionUseCase
 {
-    @NonNull
-    private final AddInteractionRepository repository;
-
     public AddInteractionForm prepareAddInteractionForm(String forContactId)
     {
         final Map<String, String> contacts = repository.getContactIdNameMap();
@@ -42,7 +40,10 @@ public class AddInteractionUseCase
     {
 		if (request.ended != null && request.ended.isBefore(request.started))
 			throw new IllegalArgumentException("End time cannot be before start time");
-        final String id = repository.insert(request);
+        final String id = repository.insert(User.identify(), request);
         return new AddInteractionResponse(id);
     }
+
+    @NonNull
+    private final AddInteractionRepository repository;
 }

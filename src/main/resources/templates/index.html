@@ -1,12 +1,145 @@
-{{< /layout}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{$ title}}{{/ title}} - Personal CRM</title>
+    <style>
+        html
+        {
+            font-family: sans-serif;
+            background-color: rgb(249, 250, 251);
+        }
 
-{{$ title}}Relationship Types{{/ title}}
+        .site-header
+        {
+            text-align: center;
+            padding: 0;
+            position: fixed;
+            width: 100%;
+        }
 
-{{$ content}}
-<h2>Welcome!</h2>
-<h3>Contacts</h3>
-{{> contacts/list}}
-<a href="/contacts/new">Add Contact</a>
-{{/ content}}
+        .site-header > nav
+        {
+            display: inline-block;
+            margin: 1rem auto;
+            padding: 0;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px black;
+        }
 
-{{/ /layout}}
+        .site-header > nav a:visited
+        {
+            color: inherit;
+        }
+
+        #home-icon-link, #pricing-link, #docs-link
+        {
+            display: inline-block;
+            margin: 1rem;
+            color: inherit;
+        }
+
+        #nav-register-link
+        {
+            margin: 1rem 1rem 1rem 0.25rem;
+            color: white;
+            background-color: rgb(59, 60, 61);
+        }
+
+        #nav-login-link
+        {
+            margin: 1rem 0.25rem 1rem 1rem;
+        }
+
+        #home-icon-link
+        {
+            text-decoration: none;
+            font-size:2rem;
+            margin: 0 0 0 0.25rem;
+            position: relative;
+            top: .14em;
+        }
+
+        .main-copy
+        {
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto;
+            padding-top: 8rem;
+        }
+
+        .headline
+        {
+            font-size: 4rem;
+        }
+
+        .description
+        {
+            font-size: 1.125rem;
+        }
+
+        .call-to-action
+        {
+            margin: 2.5rem 0;
+        }
+
+        .link-button
+        {
+            display: inline-block;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.25rem;
+            border-radius: 0.5rem;
+            /*box-shadow: 0 1px 2px black;*/
+            box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px
+        }
+
+        .sign-up-link
+        {
+            padding: 1rem 1.5rem;
+            color: white;
+            background-image: linear-gradient(to top, rgb(37, 99, 235), rgb(59, 130, 246));
+        }
+
+        .sign-up-link:hover
+        {
+            background-size: 100% 150%;
+        }
+
+        .learn-more-link
+        {
+            padding: 1rem 1.5rem;
+            color: black;
+            background-color: white;
+        }
+
+        .learn-more-link:hover
+        {
+            background-color: rgb(249, 250, 251);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a id="home-icon-link" href="/">📕</a>
+            <a id="pricing-link" href="#">Pricing</a>
+            <a id="docs-link" href="#">Docs</a>
+            <a id="nav-login-link" class="link-button" href="login">Login</a>
+            <a id="nav-register-link" class="link-button" href="signup">Register</a>
+        </nav>
+    </header>
+    <main class="main-copy">
+        <h1 class="headline">The CRM that kicks ass</h1>
+        <div class="description">Personal CRM is keeps you in touch with everyone in your life, reminding you of the important things so you can enjoy the moment.</div>
+        <div class="call-to-action">
+            <a class="link-button sign-up-link" href="signup">Register Now</a>
+            <a class="link-button learn-more-link" href="#learnmore">Learn More</a>
+        </div>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{{< /layout}}
+
+{{$ title}}Sign Up{{/ title}}
+
+{{$ content}}
+<h2>Sign Up</h2>
+<form action="signup" method="POST">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required autofocus>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" name="confirmPassword" required>
+    </div>
+    <div>
+        <input type="submit" value="Sign Up">
+    </div>
+</form>
+<p>Already have an account? <a href="/login">Log in</a></p>
+{{/ content}}
+
+{{/ /layout}}

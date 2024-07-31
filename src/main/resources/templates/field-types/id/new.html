@@ -1,0 +1,97 @@
+{{< /layout}}
+
+{{$ head}}
+<script>
+    const fieldTypes = {{{javascriptMapOfFieldTypes}}};
+    const objectType = Object.entries(fieldTypes).filter(([key, value]) => value.name == "Object")[0][1];
+
+    window.addEventListener("load", () => {
+            {{^ fieldTypeId}}
+            const fieldTypeSelect = document.getElementById('fieldTypeId');
+            fieldTypeSelect.addEventListener('change', function() {
+                const typeId = this.value;
+                if (typeId)
+                    fetch(`/field-types/${typeId}`)
+                        .then(response => response.json())
+                        .then(data => loadFieldTypeForm(data));
+            
+            });
+            if (fieldTypeSelect.value)
+                loadFieldTypeForm(fieldTypes[fieldTypeSelect.value]);
+            {{/ fieldTypeId}}
+            {{# fieldTypeId}}
+            loadFieldTypeForm(fieldTypes[{{fieldTypeId}}]);
+            {{/ fieldTypeId}}
+        });
+
+    function loadFieldTypeForm(field)
+    {
+        const dynamicFields = document.getElementById('dynamicFields');
+        dynamicFields.innerHTML = '';
+        field.fields.forEach((field, index) => {
+            const fieldDiv = document.createElement('div');
+            fieldDiv.innerHTML = `
+                <label for="fieldValues[${index}].value">${field.name}:</label>
+                <input type="${getInputType(field.fieldTypeName)}" 
+                    name="fieldValues[${index}].value" 
+                    ${field.isRequired ? 'required' : ''}
+                    value="${field.defaultValue || ''}">
+                <input type="hidden" name="fieldValues[${index}].fieldId" value="${field.id}">
+            `;
+            dynamicFields.appendChild(fieldDiv);
+        });
+    }
+
+    function getInputType(name)
+    {
+        // This function should return the appropriate input type based on the field type
+        // You might want to expand this based on your field types
+        switch (name) {
+            case 'Date':
+            case "Date with Time Zone":
+                return 'date';
+            case "Date Time":
+            case "Date Time with Time Zone":
+                return "datetime-local"
+            case "URL":
+                return "url";
+            case 'Integer':
+            case 'Decimal':
+                return 'number';
+            case 'boolean':
+                return 'checkbox';
+            default:
+                return 'text';
+        }
+    }
+</script>
+{{/head}}
+
+{{$ title}}Create {{# fieldTypeName}}{{.}}{{/ fieldTypeName}}{{^ fieldTypeName}}Custom Object{{/ fieldTypeName}}{{/ title}}
+
+{{$ content}}
+<h2>Create {{# fieldTypeName}}{{.}}{{/ fieldTypeName}}{{^ fieldTypeName}}Custom Object{{/ fieldTypeName}}</h2>
+
+<form id="createCustomObjectForm" action="/field-types/{{fieldTypeId}}" method="POST">
+    {{# fieldTypeId}}
+    <input type="hidden" name="fieldTypeId" value="{{fieldTypeId}}" />
+    {{/ fieldTypeId}}
+    {{^ fieldTypeId}}
+    <div>
+        <label for="fieldTypeId">Custom Object Type:</label>
+        <select id="fieldTypeId" name="fieldTypeId" required>
+            <option value="">--Select--</option>
+            {{#fieldTypeOptions}}
+            <option value="{{value}}"{{#selected}} selected{{/selected}}>{{text}}</option>
+            {{/fieldTypeOptions}}
+        </select>
+    </div>
+    {{/ fieldTypeId}}
+    <div id="dynamicFields">
+        <!-- Dynamic fields will be added here -->
+    </div>
+    <button type="submit">Create Custom Object</button>
+</form>
+{{/ content}}
+
+{{/ /layout}}

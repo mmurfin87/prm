@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.yourcompany.personalcrm.contacts.inspectcontactdetails.ContactDetails;
+import com.yourcompany.personalcrm.login.User;
 import com.yourcompany.personalcrm.util.Dates;
 import com.yourcompany.personalcrm.util.FormOption;
 
@@ -18,7 +19,7 @@ public class UpdateContactUseCase
 {
     public UpdateContactForm prepareForm(@NonNull final String id)
     {
-        final ContactDetails details = repository.inspectContactDetailsById(id);
+        final ContactDetails details = repository.inspectContactDetailsById(User.identify(), id);
         final List<FormOption> genderOptions = new ArrayList<>(3);
         genderOptions.add(new FormOption("Male", "Male", "Male".equalsIgnoreCase(details.gender)));
         genderOptions.add(new FormOption("Female", "Female", "Female".equalsIgnoreCase(details.gender)));
@@ -30,7 +31,7 @@ public class UpdateContactUseCase
 
     public void execute(@NonNull final String id, @NonNull final UpdateContactRequest request)
     {
-        int updatedRows = repository.updateContact(id, request);
+        int updatedRows = repository.updateContact(User.identify(), id, request);
         if (updatedRows == 0)
             throw new IllegalArgumentException("Contact not found with id: " + id);
     }

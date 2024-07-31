@@ -32,6 +32,8 @@
             <td>{{baseTypeName}}</td>
             <td>
                 {{# isCustom}}
+                <a href="field-types/{{id}}/new">New Instance</a>
+                <a href="field-types/{{id}}/list">List Instances</a>
                 <form method="POST" action="/field-types/{{id}}/delete" onsubmit="return confirm('Are you sure you want to delete this field type?');">
                     <button type="submit">Delete</button>
                 </form>

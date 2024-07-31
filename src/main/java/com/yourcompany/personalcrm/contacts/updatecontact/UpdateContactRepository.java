@@ -10,9 +10,9 @@ import com.yourcompany.personalcrm.contacts.inspectcontactdetails.ContactDetails
 
 public interface UpdateContactRepository
 {
-    @SqlQuery("SELECT id, first_name, last_name, birthdate, DATEDIFF(YEAR, birthdate, CURRENT_DATE()) as age, gender, email, phone, company FROM contacts WHERE id = :id")
+    @SqlQuery("SELECT id, first_name, last_name, birthdate, DATEDIFF(YEAR, birthdate, CURRENT_DATE()) as age, gender, email, phone, company FROM contacts WHERE id = :id AND owner_id = :ownerId")
     @RegisterConstructorMapper(ContactDetails.class)
-    ContactDetails inspectContactDetailsById(@Bind String id);
+    ContactDetails inspectContactDetailsById(@Bind String ownerId, @Bind String id);
     
     @SqlUpdate("""
         UPDATE contacts
@@ -25,7 +25,9 @@ public interface UpdateContactRepository
             phone = :phone,
             company = :company
         WHERE 
+            owner_id = :ownerId
+            AND
             id = :id
         """)
-    int updateContact(@Bind String id, @BindFields UpdateContactRequest request);
+    int updateContact(@Bind String ownerId, @Bind String id, @BindFields UpdateContactRequest request);
 }
