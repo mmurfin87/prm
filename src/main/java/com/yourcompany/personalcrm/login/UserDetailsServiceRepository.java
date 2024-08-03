@@ -31,12 +31,12 @@ public interface UserDetailsServiceRepository extends UserDetailsService
     @SqlUpdate("INSERT INTO user_tokens (user_id, token, token_type, expiration) SELECT id, :token, :tokenType, :expiration FROM app_users WHERE username = :username")
     String saveToken(@Bind String username, @Bind String token, @Bind String tokenType, @Bind Instant expiration);
 
-    @RegisterConstructorMapper(UserToken.class)
-    @SqlQuery("SELECT id, user_id, token, token_type, expiration FROM user_tokens WHERE token = :token AND expiration > CURRENT_TIMESTAMP")
-    UserToken findValidTokenByToken(@Bind String token);
+    //@RegisterConstructorMapper(UserToken.class)
+    @SqlQuery("SELECT count(1) FROM user_tokens WHERE token = :token AND expiration > CURRENT_TIMESTAMP")
+    boolean checkTokenValidity(@Bind String token);
 
-    @SqlUpdate("DELETE FROM user_tokens WHERE token = :token")
-    void deleteToken(@Bind String token);
+    @SqlUpdate("DELETE FROM user_tokens WHERE user_id = :userId AND token = :token")
+    void deleteUserToken(@Bind String userId, @Bind String token);
 
     @SqlUpdate("DELETE FROM user_tokens WHERE user_id = :userId AND token_type = :tokenType")
     void deleteByUserIdAndTokenType(@Bind("userId") Long userId, @Bind("tokenType") String tokenType);

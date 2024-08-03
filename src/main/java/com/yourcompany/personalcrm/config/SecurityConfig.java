@@ -1,5 +1,7 @@
 package com.yourcompany.personalcrm.config;
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import com.yourcompany.personalcrm.login.User;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -51,8 +57,21 @@ public class SecurityConfig
             .formLogin((form) -> form
                 //.loginPage("/login")
                 .permitAll()
+                .defaultSuccessUrl("/contacts", false)
             )
-            .logout((logout) -> logout.permitAll())
+            .logout((logout) -> logout
+                .addLogoutHandler((req, res, auth) ->
+                    {
+                        if (auth.getPrincipal() instanceof User user)
+                            securityContextRepository.invalidateUserToken(user.id, req.getRequestedSessionId());
+                        try
+                        {
+                            res.sendRedirect("/");
+                        } catch (IOException e) {
+                            log.error("Couldn't redirect after logout", e);
+                        }
+                    })
+                .permitAll())
             .build();
     }
 

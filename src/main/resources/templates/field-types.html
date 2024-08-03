@@ -30,12 +30,12 @@
             <td>{{pkg}}</td>
             <td>{{description}}</td>
             <td>{{baseTypeName}}</td>
-            <td>
+            <td class="form-actions">
                 {{# isCustom}}
-                <a href="field-types/{{id}}/new">New Instance</a>
-                <a href="field-types/{{id}}/list">List Instances</a>
+                <a class="primary-button" href="field-types/{{id}}/new">New Instance</a>
+                <a class="link-button" href="field-types/{{id}}/list">List Instances</a>
                 <form method="POST" action="/field-types/{{id}}/delete" onsubmit="return confirm('Are you sure you want to delete this field type?');">
-                    <button type="submit">Delete</button>
+                    <button class="primary-button" type="submit">Delete</button>
                 </form>
                 {{/ isCustom}}
             </td>

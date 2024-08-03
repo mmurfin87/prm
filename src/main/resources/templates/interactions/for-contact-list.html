@@ -13,10 +13,10 @@
             <td>{{formatedStarted}}</td>
             <td>{{type}}</td>
             <td>{{summary}}</td>
-            <td>
+            <td class="form-actions">
                 <form action="/interactions/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this interaction?');">
                     <input type="hidden" name="id" value="{{id}}">
-                    <button type="submit">Delete</button>
+                    <button class="primary-button" type="submit">Delete</button>
                 </form>
             </td>
         </tr>

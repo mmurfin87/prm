@@ -43,8 +43,8 @@ public class JdbiConfiguration
     {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        //dataSource.setUrl("jdbc:h2:file:./data/personalcrm;MODE=PostgreSQL;DB_CLOSE_DELAY=-1");
-        dataSource.setUrl("jdbc:h2:file:./data/personalcrm;DB_CLOSE_DELAY=-1");
+        dataSource.setUrl("jdbc:h2:file:./data/personalcrm;MODE=PostgreSQL;DB_CLOSE_DELAY=-1");
+        //dataSource.setUrl("jdbc:h2:file:./data/personalcrm;DB_CLOSE_DELAY=-1");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;

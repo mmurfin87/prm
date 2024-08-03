@@ -1,9 +1,9 @@
 {{< /layout}}
 
-{{$ title}}Sign Up{{/ title}}
+{{$ title}}Register{{/ title}}
 
 {{$ content}}
-<h2>Sign Up</h2>
+<h2>Register</h2>
 <form action="signup" method="POST">
     <div>
         <label for="username">Username:</label>
@@ -21,8 +21,8 @@
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" name="confirmPassword" required>
     </div>
-    <div>
-        <input type="submit" value="Sign Up">
+    <div class="form-actions">
+        <input class="primary-button" type="submit" value="Sign Up">
     </div>
 </form>
 <p>Already have an account? <a href="/login">Log in</a></p>

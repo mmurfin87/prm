@@ -11,9 +11,9 @@
         <tr>
             <td>{{contactName}}</td>
             <td>{{relationshipTypeName}}</td>
-            <td>
-                <a href="/contacts/{{contactId}}">View</a>
-                <button class="btn btn-sm btn-danger delete-type" data-id="{{id}}">Delete</button>
+            <td class="form-actions">
+                <a class="link-button" href="/contacts/{{contactId}}">View</a>
+                <button class="primary-button" data-id="{{id}}">Delete</button>
             </td>
         </tr>
         {{/ relationships}}

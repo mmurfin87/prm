@@ -1,24 +1,36 @@
 {{< /layout}}
-{{$ title}}Contact Details{{/ title}}
-{{$ content}}
 
+{{$ title}}Contact Details{{/ title}}
+
+{{$ content}}
 <h2>{{contactDetails.firstName}} {{contactDetails.lastName}}</h2>
 
-<p>Gender: {{contactDetails.gender}}</p>
-<p>Birthday (age): {{# contactDetails.birthdate}}{{contactDetails.birthdateFormatted}} ({{contactDetails.age}}){{/ contactDetails.birthdate}}</p>
-<p>Email: {{contactDetails.email}}</p>
-<p>Phone: {{contactDetails.phone}}</p>
-<p>Company: {{contactDetails.company}}</p>
+<section>
+    {{#contactDetails.gender}}<p>Gender: {{contactDetails.gender}}</p>{{/contactDetails.gender}}
+    {{#contactDetails.birthdate}}<p>Birthday (age): {{# contactDetails.birthdate}}{{contactDetails.birthdateFormatted}} ({{contactDetails.age}}){{/ contactDetails.birthdate}}</p>{{/contactDetails.birthdate}}
+    {{#contactDetails.email}}<p>Email: {{contactDetails.email}}</p>{{/contactDetails.email}}
+    {{#contactDetails.phone}}<p>Phone: {{contactDetails.phone}}</p>{{/contactDetails.phone}}
+    {{#contactDetails.company}}<p>Company: {{contactDetails.company}}</p>{{/contactDetails.company}}
+    <div class="form-actions">
+        <a class="primary-button" href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a>
+    </div>
+</section>
 
-<a href="/contacts/{{contactDetails.id}}/edit">Edit Contact</a>
+<section>
+    <h3>Interactions</h3>
+    {{> /interactions/for-contact-list}}
+    <div class="form-actions">
+        <a class="primary-button" href="/interactions/new?for-contact-id={{contactDetails.id}}">Add Interaction</a>
+    </div>
+</section>
 
-<h3>Interactions</h3>
-{{> /interactions/for-contact-list}}
-<a href="/interactions/new?for-contact-id={{contactDetails.id}}">Add Interaction</a>
-
-<h3>Relationships</h3>
-{{> /relationships/for-contact-list}}
-<a href="/relationships/new?for-contact-id={{contactDetails.id}}">Add Relationship</a>
-
+<section>
+    <h3>Relationships</h3>
+    {{> /relationships/for-contact-list}}
+    <div class="form-actions">
+        <a class="primary-button" href="/relationships/new?for-contact-id={{contactDetails.id}}">Add Relationship</a>
+    </div>
+</section>
 {{/ content}}
+
 {{/ /layout}}

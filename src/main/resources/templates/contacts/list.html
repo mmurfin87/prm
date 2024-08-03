@@ -11,10 +11,10 @@
         <tr>
             <td>{{firstName}} {{lastName}}</td>
             <td>{{# birthdate}}{{birthdateFormatted}} ({{age}}){{/ birthdate}}</td>
-            <td>
-                <a href="/contacts/{{id}}">View</a>
-                <a href="/contacts/{{id}}/edit">Edit</a>
-                <button onclick="deleteContact('{{id}}')">Delete</button>
+            <td class="form-actions">
+                <a class="link-button" href="/contacts/{{id}}">View</a>
+                <a class="link-button" href="/contacts/{{id}}/edit">Edit</a>
+                <button class="primary-button" onclick="deleteContact('{{id}}')">Delete</button>
             </td>
         </tr>
         {{/ .}}
